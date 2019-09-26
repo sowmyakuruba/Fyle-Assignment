@@ -1,0 +1,171 @@
+<html>
+  <head>
+    <title>Fyle</title>
+  </head>
+  <body>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-success card-header-icon">
+            <h2 class="card-title">Fyle Bank Search</h2>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="input-group mb-15">
+                  <button class="col-form-label">City</button>
+                  <select
+                    class="form-control"
+                    id="comboCity"
+                    (ngModelChange)="onComboChange($event)"
+                    [(ngModel)]="comboCity"
+                  >
+                    <option *ngFor="let item of ['MUMBAI', 'BANGALORE', 'KERALA', 'GUJARAT', 'ALLAHABAD', 'DELHI']">{{
+                      item
+                    }}</option>
+                  </select>
+                </div>
+                <div class="input-group mb-15">
+                  <button class="col-form-label">Search for</button>
+                  <input
+                    type="text"
+                    class="form-control form-control-lg inputText"
+                    placeholder="Ifsc"
+                    [(ngModel)]="ifsc"
+                    (input)="filter($event)"
+                    required
+                  />
+                  <input
+                    type="text"
+                    class="form-control form-control-lg inputText"
+                    placeholder="Bank id"
+                    [(ngModel)]="bankId"
+                    (input)="filter($event)"
+                    required
+                  />
+                  <input
+                    type="text"
+                    class="form-control form-control-lg inputText"
+                    placeholder="Branch"
+                    [(ngModel)]="branch"
+                    (input)="filter($event)"
+                    required
+                  />
+                  <input
+                    type="text"
+                    class="form-control form-control-lg inputText"
+                    placeholder="Address"
+                    [(ngModel)]="address"
+                    (input)="filter($event)"
+                    required
+                  />
+                  <input
+                    type="text"
+                    class="form-control form-control-lg inputText"
+                    placeholder="City"
+                    [(ngModel)]="city"
+                    (input)="filter($event)"
+                    required
+                  />
+                  <input
+                    type="text"
+                    class="form-control form-control-lg inputText"
+                    placeholder="District"
+                    [(ngModel)]="district"
+                    (input)="filter($event)"
+                    required
+                  />
+                  <input
+                    type="text"
+                    class="form-control form-control-lg inputText"
+                    placeholder="State"
+                    [(ngModel)]="state"
+                    (input)="filter($event)"
+                    required
+                  />
+                  <input
+                    type="text"
+                    class="form-control form-control-lg inputText"
+                    placeholder="Bank Name"
+                    [(ngModel)]="bankName"
+                    (input)="filter($event)"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="col-md-4"></div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="table-responsive">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr class="table-head">
+                        <th>FAVOURITES</th>
+                        <th>IFSC</th>
+                        <th>BANK ID</th>
+                        <th>BRANCH</th>
+                        <th>ADDRESS</th>
+                        <th>CITY</th>
+                        <th>DISTRICT</th>
+                        <th>STATE</th>
+                        <th>BANK NAME</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        class="table-body"
+                        *ngFor="
+                          let data of showBankList | paginate: { itemsPerPage: noOfRecords, currentPage: page };
+                          let i = index
+                        "
+                      >
+                        <td>
+                          <input
+                            type="checkbox"
+                            class="filled-in col-12"
+                            name="{{ i }}"
+                            id="{{ i }}"
+                            (change)="onCheckBox($event, i, data.ifsc)"
+                            [checked]="onChecked(data.ifsc)"
+                          />
+                        </td>
+                        <td>{{ data.ifsc }}</td>
+                        <td>{{ data.bank_id }}</td>
+                        <td>{{ data.branch }}</td>
+                        <td>{{ data.address }}</td>
+                        <td>{{ data.city }}</td>
+                        <td>{{ data.district }}</td>
+                        <td>{{ data.state }}</td>
+                        <td>{{ data.bank_name }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="btn-group" role="group" aria-label="First group">
+                    <button type="button" class="btn btn-secondary" (click)="pageNext('-')" *ngIf="back()">
+                      <i class="fa fa-angle-double-left"> </i>
+                    </button>
+
+                    <button type="button" class="btn btn-secondary">
+                      <i class="fa">{{ page }} </i>
+                    </button>
+
+                    <button type="button" class="btn btn-secondary" (click)="pageNext('+')" *ngIf="forward()">
+                      <i class="fa fa-angle-double-right"></i>
+                    </button>
+
+                    <select [(ngModel)]="noOfRecords">
+                      <option *ngFor="let c of [2, 5, 10, 20, 50]" value="{{ c }}">
+                        {{ c }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
